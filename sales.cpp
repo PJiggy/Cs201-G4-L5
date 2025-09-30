@@ -5,14 +5,13 @@ using namespace std;
 
 int main(){
     int days = 0; // keeps track of the days
-
+    bool firstEntry = true;
     double total, entry; 
     // total sales,  current entry
     double highest = 0, lowest = 0; // highest and lowest entries in a day
 
     // Step 1: intial prompt
-    cout << "Hello, welcome to the sales calculator. Please enter your sales for each day or
-    -1 at any time to exit." << endl;
+    cout << "Hello, welcome to the sales calculator. Please enter your sales for each day or -1 at any time to exit." << endl;
 
     do {
         cout << "Entry: "; // didn't put endl because I like how cin looks after :
@@ -25,13 +24,18 @@ int main(){
         if(entry >= 0){ // valid sale
             days++; // increment days
             total += entry; // add entry to total
+
+            if (firstEntry){
+                highest = lowest = entry;
+                firstEntry = false;
+            }
             // check if entry is highest or lowest
             if(entry > highest){ 
                 highest = entry;
                 // special message that notes entry is highest
                 cout << endl << entry << "(highest) sales entered for day " << days << endl;
             }
-            else if(entry < lowest){
+            else if(entry < lowest ){
                 lowest = entry; // set lowest to current entry
                 // special message that notes entry is lowest
                 cout << endl << entry << "(lowest) sales entered for day " << days << endl;
@@ -45,8 +49,11 @@ int main(){
     } while(entry != -1); // when user enters -1 for entry it means exit
     
     // handle case where there isn't a sale entered
+
     if(days == 0){
-        cout << endl "No sales? Maybe hire a better marketing team....";
+
+        cout << "\nNo sales? Maybe hire a better marketing team....";
+
         return 0;
     }
 
@@ -66,7 +73,7 @@ int main(){
                 outFile << "Highest day: $" << highest << endl;;
                 outFile.close();
                 // notify user it was successful
-                cout << "\n(... Report successfully saved in "sales.txt"!)\n"; 
+                cout << "\n(... Report successfully saved in 'sales.txt'!)\n"; 
                 cout << "Best of luck in your business endeavors! :)";
             } else {
                 cout << "\nError: Could not save results to file.\n"; // error
